@@ -1,6 +1,6 @@
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-from motion_planner.math import global2local
+from motion_planner.utils.math import global2local
 
 
 class CollisionChecker(object):
