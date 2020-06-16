@@ -6,4 +6,7 @@ python -m unittest discover -s test
 ```
 ./venv/bin/python setup.py install
 ```
-
+#### Create requirements.txt
+```
+pip freeze --local > requirements.txt
+```

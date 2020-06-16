@@ -33,8 +33,10 @@ def global2local(global_point, source_point):
     source_point = np.array(source_point)
     global_x, global_y, global_angle, dimension = point_coordinates(global_point)
     source_x, source_y, source_angle = source_point.T
-    local_x = global_x * np.cos(source_angle) + global_y * np.sin(source_angle) - source_x * np.cos(source_angle) - source_y * np.sin(source_angle)
-    local_y = -global_x * np.sin(source_angle) + global_y * np.cos(source_angle) + source_x * np.sin(source_angle) - source_y * np.cos(source_angle)
+    local_x = global_x * np.cos(source_angle) + global_y * np.sin(source_angle) - source_x * np.cos(
+        source_angle) - source_y * np.sin(source_angle)
+    local_y = -global_x * np.sin(source_angle) + global_y * np.cos(source_angle) + source_x * np.sin(
+        source_angle) - source_y * np.cos(source_angle)
     local_angle = (global_angle - source_angle + np.pi) % (2 * np.pi) - np.pi
     if dimension == 3:
         return np.array([local_x, local_y, local_angle]).T

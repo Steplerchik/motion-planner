@@ -1,9 +1,21 @@
-from setuptools import setup, find_packages
-from os.path import join, dirname
+#!/usr/bin/env python
 
-setup(
-    name='motion_planner',
-    version='1.0',
-    packages=find_packages(),
-    long_description=open(join(dirname(__file__), 'README.md')).read(),
-)
+import os
+from distutils.core import setup
+
+folder = os.path.dirname(os.path.realpath(__file__))
+requirements_path = os.path.join(folder, 'requirements.txt')
+install_requires = []
+if os.path.isfile(requirements_path):
+    with open(requirements_path) as f:
+        install_requires = f.read().splitlines()
+
+setup(name='motion_planner',
+      version='0.1',
+      description='Installation of motion planner requirements',
+      author='WareVision LLC Team',
+      author_email='',
+      package_dir={},
+      packages=[],
+      install_requires=install_requires
+      )
