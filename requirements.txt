@@ -1,3 +1,2 @@
-motion-planner==0.1
 numpy==1.18.5
 Shapely==1.7.0

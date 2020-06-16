@@ -3,6 +3,8 @@
 import os
 from distutils.core import setup
 
+from setuptools import find_packages
+
 folder = os.path.dirname(os.path.realpath(__file__))
 requirements_path = os.path.join(folder, 'requirements.txt')
 install_requires = []
@@ -16,6 +18,6 @@ setup(name='motion_planner',
       author='WareVision LLC Team',
       author_email='',
       package_dir={},
-      packages=[],
+      packages=find_packages(),
       install_requires=install_requires
       )

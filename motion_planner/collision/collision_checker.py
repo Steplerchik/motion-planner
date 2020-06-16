@@ -1,6 +1,6 @@
 import numpy as np
 
-from motion_planner.utils.math import global2local
+from motion_planner.utils import global2local
 from .robot_shapes import Rectangle
 
 
