@@ -10,21 +10,21 @@ class TestCollisionChecker(unittest.TestCase):
     def test_absence_of_shape(self):
         robot_center = np.array([0, 0, 0])
         obstacle_points = np.array([[1, 1], [0, 1], [1, 0], [0, 0]])
-        result = CollisionChecker(robot_center, obstacle_points).is_collision()
+        result = CollisionChecker().check_robot_shape_within_points(robot_center, obstacle_points)
         self.assertFalse(result)
 
     def test_rectangular_shape_collision_true(self):
         robot_center = np.array([0, 0, 0])
         obstacle_points = np.array([[1, 1], [0, 1], [1, 0], [0, 0]])
-        shape = Rectangle(2, 3).shape()
-        result = CollisionChecker(robot_center, obstacle_points).is_collision(shape)
+        shape = Rectangle(2, 3)
+        result = CollisionChecker(shape).check_robot_shape_within_points(robot_center, obstacle_points)
         self.assertTrue(result)
 
     def test_rectangular_shape_collision_false(self):
         robot_center = np.array([0.5, 0.5, np.pi/4])
         obstacle_points = np.array([[1, 1], [0, 1], [1, 0], [0, 0]])
-        shape = Rectangle(1.1, 1.1).shape()
-        result = CollisionChecker(robot_center, obstacle_points).is_collision(shape)
+        shape = Rectangle(1.1, 1.1)
+        result = CollisionChecker(shape).check_robot_shape_within_points(robot_center, obstacle_points)
         self.assertFalse(result)
 
     def test_global2local(self):
@@ -42,8 +42,8 @@ class TestCollisionChecker(unittest.TestCase):
     def test_long_rectangular_shape_collision_false(self):
         robot_center = np.array([0.5, 0.5, 0])
         obstacle_points = np.array([[1, 1], [0, 1], [1, 0], [0, 0]])
-        shape = Rectangle(0.2, 5).shape()
-        result = CollisionChecker(robot_center, obstacle_points).is_collision(shape)
+        shape = Rectangle(0.2, 5)
+        result = CollisionChecker(shape).check_robot_shape_within_points(robot_center, obstacle_points)
         self.assertFalse(result)
 
 
