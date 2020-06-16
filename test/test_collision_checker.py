@@ -1,10 +1,9 @@
 import unittest
 import numpy as np
-from change_coordinate_system import global2local
-from change_coordinate_system import local2global
+from motion_planner.math import global2local, local2global
 
-from collision_checker import CollisionChecker
-from robot_shapes import Rectangle
+from motion_planner.collision_checker import CollisionChecker
+from motion_planner.robot_shapes import Rectangle
 
 
 class TestCollisionChecker(unittest.TestCase):
