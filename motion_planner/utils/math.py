@@ -44,3 +44,7 @@ def global2local(global_point, source_point):
         return np.array([local_x, local_y]).T
     else:
         return
+
+
+def wrap_angle(angle):
+    return (angle + np.pi) % (2 * np.pi) - np.pi
