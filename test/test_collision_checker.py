@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from motion_planner import CollisionChecker, Rectangle, global2local, local2global, plot_local_shape_obstacles
+from motion_planner import CollisionChecker, Rectangle, global2local, local2global
 
 
 class TestCollisionChecker(unittest.TestCase):
