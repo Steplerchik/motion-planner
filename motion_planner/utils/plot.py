@@ -16,7 +16,7 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
     ax.plot(x_obstacle, y_obstacle, 'o')
 
     ax.set_aspect(1)
-    ax.set_title('Local robot coordinates')
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
+    ax.set_title('Robot shape and local obstacle coordinates')
+    ax.set_xlabel('X, [m]')
+    ax.set_ylabel('Y, [m]')
     plt.show()

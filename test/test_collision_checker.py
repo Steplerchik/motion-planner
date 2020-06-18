@@ -10,7 +10,6 @@ class TestCollisionChecker(unittest.TestCase):
         robot_center = np.array([0, 0, 0])
         obstacle_points = np.array([[1, 1], [0, 1], [1, 0], [0.5, 0.5]])
         result = CollisionChecker().check(robot_center, obstacle_points)
-        plot_local_shape_obstacles(obstacle_points, robot_center)
         self.assertFalse(result)
 
     def test_rectangular_shape_collision_true(self):
@@ -51,7 +50,6 @@ class TestCollisionChecker(unittest.TestCase):
         obstacle_points = np.array([[1, 1], [0, 1.1], [1, -0.1], [0, -0.1]])
         shape = Rectangle(2, 1.0)
         result = CollisionChecker(shape).check(robot_center, obstacle_points)
-        plot_local_shape_obstacles(obstacle_points, robot_center, shape)
         self.assertTrue(result)
 
     def test_shapes_with_plot_collision_false(self):
@@ -59,7 +57,6 @@ class TestCollisionChecker(unittest.TestCase):
         obstacle_points = np.array([[1, -0.1], [0, -0.1], [1, -0.2], [0, -0.2]])
         shape = Rectangle(2, 1.0)
         result = CollisionChecker(shape).check(robot_center, obstacle_points)
-        plot_local_shape_obstacles(obstacle_points, robot_center, shape)
         self.assertFalse(result)
 
 
