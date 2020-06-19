@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib import collections  as mc
+from matplotlib import collections as mc
 from matplotlib import pyplot as plt
 
 from motion_planner import global2local, Rectangle, SpaceInfo
@@ -26,6 +26,7 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
 def plot_rrt(rrt, obstacle_points, space_info=SpaceInfo()):
     fig, ax = plt.subplots()
     tree = rrt.tree
+    path = rrt.path
 
     tree_point_x_coordinates = [x for x, y, angle in tree.vertices]
     tree_point_y_coordinates = [y for x, y, angle in tree.vertices]
@@ -40,6 +41,11 @@ def plot_rrt(rrt, obstacle_points, space_info=SpaceInfo()):
         for edge in tree.edges]
     tree_lines = mc.LineCollection(tree_edges, colors='blue', linewidths=2)
     ax.add_collection(tree_lines)
+
+    if path is not None:
+        path_edges = [((path[i][0], path[i][1]), (path[i + 1][0], path[i + 1][1])) for i in range(len(path) - 1)]
+        path_lines = mc.LineCollection(path_edges, colors='green', linewidths=3)
+        ax.add_collection(path_lines)
 
     ax.scatter(rrt.start_position[0], rrt.start_position[1], c='black', linewidths=2)
     ax.scatter(rrt.end_position[0], rrt.end_position[1], c='black', linewidths=2)

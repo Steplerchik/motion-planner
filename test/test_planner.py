@@ -29,8 +29,8 @@ class TestPlanner(unittest.TestCase):
         self.assertEqual(list(result), [0, 0, 0])
 
     def test_RRT(self):
-        start_position = np.array([2, 2, 0])
-        end_position = np.array([5, 8, 0])
+        start_position = np.array([3.5, 1, 0])
+        end_position = np.array([9, 6.5, 0])
         robot_shape = Rectangle(1, 0.5)
         alpha = 0
         space_info = SpaceInfo(robot_shape, alpha)
@@ -58,7 +58,7 @@ class TestPlanner(unittest.TestCase):
                           collision_check_step_size)
 
         rrt_planner.create_tree()
-        plot_rrt(rrt_planner, obstacle_points)
+        rrt_planner.find_path()
         self.assertTrue(True)
 
     def test_boundaries(self):
@@ -96,7 +96,6 @@ class TestPlanner(unittest.TestCase):
                           collision_check_step_size)
 
         rrt_planner.create_tree()
-        plot_rrt(rrt_planner, obstacle_points)
         self.assertTrue(True)
 
 

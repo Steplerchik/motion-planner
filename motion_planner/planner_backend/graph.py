@@ -9,7 +9,7 @@ class Graph(object):
 
         self._start_index = 0
         self._vertex2index = {root_position: self._start_index}
-        self._neighbours = {self._start_index: []}
+        self.neighbours = {self._start_index: []}
         # self.distances = {self._start_index: 0.0}
 
     def add_vertex(self, position):
@@ -19,10 +19,10 @@ class Graph(object):
         index = len(self.vertices)
         self.vertices.append(position)
         self._vertex2index[position] = index
-        self._neighbours[index] = []
+        self.neighbours[index] = []
         return index
 
     def add_edge(self, index1, index2, distance):
         self.edges.append((index1, index2))
-        self._neighbours[index1].append((index2, distance))
-        self._neighbours[index2].append((index1, distance))
+        self.neighbours[index1].append((index2, distance))
+        self.neighbours[index2].append((index1, distance))
