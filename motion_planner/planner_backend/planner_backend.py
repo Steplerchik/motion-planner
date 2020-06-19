@@ -76,4 +76,3 @@ class RRTBasedPlanner(ABC):
             current_node_index = parent_node_indexes[current_node_index]
         path.appendleft(self.tree.vertices[current_node_index])
         self._path = path
-        return list(path)
