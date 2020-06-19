@@ -10,7 +10,6 @@ class RobotShape(ABC):
     def check(self, local_obstacle_points):
         points = MultiPoint(local_obstacle_points)
         if self._shape.intersects(points):
-        # if points.within(self._shape):
             return True
         return False
 

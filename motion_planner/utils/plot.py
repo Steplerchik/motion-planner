@@ -1,7 +1,8 @@
 import numpy as np
+from matplotlib import collections  as mc
 from matplotlib import pyplot as plt
 
-from motion_planner import global2local, Rectangle
+from motion_planner import global2local, Rectangle, SpaceInfo
 
 
 def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Rectangle(0, 0)):
@@ -19,4 +20,29 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
     ax.set_title('Robot shape and local obstacle coordinates')
     ax.set_xlabel('X, [m]')
     ax.set_ylabel('Y, [m]')
+    plt.show()
+
+
+def plot_rrt(rrt, obstacle_points, space_info=SpaceInfo()):
+    fig, ax = plt.subplots()
+    tree = rrt.tree
+
+    tree_point_x_coordinates = [x for x, y, angle in tree.vertices]
+    tree_point_y_coordinates = [y for x, y, angle in tree.vertices]
+    obstacle_x_coordinates = obstacle_points[:, 0]
+    obstacle_y_coordinates = obstacle_points[:, 1]
+
+    ax.scatter(obstacle_x_coordinates, obstacle_y_coordinates, c='red')
+
+    ax.scatter(tree_point_x_coordinates, tree_point_y_coordinates, c='cyan')
+    tree_edges = [
+        ((tree.vertices[edge[0]][0], tree.vertices[edge[0]][1]), (tree.vertices[edge[1]][0], tree.vertices[edge[1]][1]))
+        for edge in tree.edges]
+    tree_lines = mc.LineCollection(tree_edges, colors='blue', linewidths=2)
+    ax.add_collection(tree_lines)
+
+    ax.scatter(rrt.start_position[0], rrt.start_position[1], c='black', linewidths=2)
+    ax.scatter(rrt.end_position[0], rrt.end_position[1], c='black', linewidths=2)
+
+    ax.set_aspect(1)
     plt.show()
