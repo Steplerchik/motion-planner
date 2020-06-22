@@ -1,4 +1,4 @@
-import numpy as np
+from collections import deque
 
 
 class Graph(object):
@@ -7,22 +7,33 @@ class Graph(object):
         self.vertices = [root_position]
         self.edges = []
 
-        self._start_index = 0
-        self._vertex2index = {root_position: self._start_index}
-        self.neighbours = {self._start_index: []}
-        # self.distances = {self._start_index: 0.0}
+        self._costs = {root_position: 0}
+        self._parents = {root_position: tuple()}
 
     def add_vertex(self, position):
         position = tuple(position)
-        if position in self._vertex2index.keys():
-            return self._vertex2index[position]
-        index = len(self.vertices)
-        self.vertices.append(position)
-        self._vertex2index[position] = index
-        self.neighbours[index] = []
-        return index
+        if position not in self.vertices:
+            self.vertices.append(position)
+            self._costs[position] = 0
+            self._parents[position] = tuple()
 
-    def add_edge(self, index1, index2, distance):
-        self.edges.append((index1, index2))
-        self.neighbours[index1].append((index2, distance))
-        self.neighbours[index2].append((index1, distance))
+    def add_edge(self, parent_position, child_position, distance):
+        parent_position = tuple(parent_position)
+        child_position = tuple(child_position)
+        self.edges.append((parent_position, child_position))
+        self._costs[child_position] = distance
+        self._parents[child_position] = parent_position
+
+    def find_trajectory(self, end_position):
+        end_position = tuple(end_position)
+        trajectory = deque()
+        cost = 0
+        parent_vertices = self._parents
+        if end_position in parent_vertices:
+            current_vertex = end_position
+            while parent_vertices[current_vertex] is not tuple():
+                trajectory.appendleft(current_vertex)
+                cost += self._costs[current_vertex]
+                current_vertex = parent_vertices[current_vertex]
+            trajectory.appendleft(current_vertex)
+        return trajectory, cost

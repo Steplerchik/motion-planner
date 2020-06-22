@@ -35,7 +35,7 @@ class TestStateSpace(unittest.TestCase):
         target_robot_coordinates = np.array([0, 11, np.pi / 2])
         interpolated_coordinates = SE2().interpolate(current_robot_coordinates, target_robot_coordinates, t=0.25)
         obstacle_points = np.array([[0, 2.499], [0.1, 2.4]])
-        result = CollisionChecker(shape).check(interpolated_coordinates, obstacle_points)
+        result = CollisionChecker(shape, global_obstacle_points=obstacle_points).check(interpolated_coordinates)
         self.assertFalse(result)
 
     def test_collision_in_interpolated_point_2(self):
@@ -44,7 +44,7 @@ class TestStateSpace(unittest.TestCase):
         target_robot_coordinates = np.array([0, 11, np.pi / 2])
         interpolated_coordinates = SE2().interpolate(current_robot_coordinates, target_robot_coordinates, t=0.25)
         obstacle_points = np.array([[0, 2.5], [0.1, 2.4]])
-        result = CollisionChecker(shape).check(interpolated_coordinates, obstacle_points)
+        result = CollisionChecker(shape, global_obstacle_points=obstacle_points).check(interpolated_coordinates)
         self.assertTrue(result)
 
 

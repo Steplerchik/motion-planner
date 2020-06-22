@@ -23,13 +23,13 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
     plt.show()
 
 
-def plot_rrt(rrt, obstacle_points, space_info=SpaceInfo()):
+def plot_rrt(rrt, start_position, end_position, obstacle_points):
     fig, ax = plt.subplots()
-    tree = rrt.tree
-    path = rrt.path
-
-    tree_point_x_coordinates = [x for x, y, angle in tree.vertices]
-    tree_point_y_coordinates = [y for x, y, angle in tree.vertices]
+    trajectory = rrt.trajectory
+    vertices = rrt.tree.vertices
+    edges = rrt.tree.edges
+    tree_point_x_coordinates = [x for x, y, angle in vertices]
+    tree_point_y_coordinates = [y for x, y, angle in vertices]
     obstacle_x_coordinates = obstacle_points[:, 0]
     obstacle_y_coordinates = obstacle_points[:, 1]
 
@@ -37,18 +37,19 @@ def plot_rrt(rrt, obstacle_points, space_info=SpaceInfo()):
 
     ax.scatter(tree_point_x_coordinates, tree_point_y_coordinates, c='cyan')
     tree_edges = [
-        ((tree.vertices[edge[0]][0], tree.vertices[edge[0]][1]), (tree.vertices[edge[1]][0], tree.vertices[edge[1]][1]))
-        for edge in tree.edges]
+        ((edge[0][0], edge[0][1]), (edge[1][0], edge[1][1]))
+        for edge in edges]
     tree_lines = mc.LineCollection(tree_edges, colors='blue', linewidths=2)
     ax.add_collection(tree_lines)
 
-    if path is not None:
-        path_edges = [((path[i][0], path[i][1]), (path[i + 1][0], path[i + 1][1])) for i in range(len(path) - 1)]
-        path_lines = mc.LineCollection(path_edges, colors='green', linewidths=3)
-        ax.add_collection(path_lines)
+    if trajectory is not None:
+        trajectory_edges = [((trajectory[i][0], trajectory[i][1]), (trajectory[i + 1][0], trajectory[i + 1][1])) for i
+                            in range(len(trajectory) - 1)]
+        trajectory_lines = mc.LineCollection(trajectory_edges, colors='green', linewidths=3)
+        ax.add_collection(trajectory_lines)
 
-    ax.scatter(rrt.start_position[0], rrt.start_position[1], c='black', linewidths=2)
-    ax.scatter(rrt.end_position[0], rrt.end_position[1], c='black', linewidths=2)
+    ax.scatter(start_position[0], start_position[1], c='black', linewidths=2)
+    ax.scatter(end_position[0], end_position[1], c='black', linewidths=2)
 
     ax.set_aspect(1)
     plt.show()

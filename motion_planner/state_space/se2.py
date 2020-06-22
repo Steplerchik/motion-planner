@@ -7,8 +7,12 @@ from motion_planner import wrap_angle
 
 # TODO: space_info
 class SE2(object):
-    def __init__(self, alpha=0.0):
+    def __init__(self, alpha=0.0, boundaries=None):
         self._alpha = alpha
+        if boundaries is None:
+            self.boundaries = [-1e9, 1e9, -1e9, 1e9]
+        else:
+            self.boundaries = boundaries
 
     @staticmethod
     def interpolate(first_position, second_position, t=0.5):
