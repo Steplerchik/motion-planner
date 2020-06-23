@@ -54,7 +54,6 @@ class TestPlanner(unittest.TestCase):
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
 
         rrt_planner.get_trajectory(start_position, end_position)
-        plot_rrt(rrt_planner, start_position, end_position, obstacle_points)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
@@ -94,12 +93,12 @@ class TestPlanner(unittest.TestCase):
         robot_shape = Rectangle(1, 0.5)
         alpha = 0
         boundaries = [0, 10, 0, 10]
-        nx, ny = (10, 10)
+        nx, ny = (20, 20)
         collision_check_step_size = 0.025
         obstacle_x5 = (np.ones(ny) * 5)[np.newaxis].T
         obstacle_y5 = (np.ones(nx) * 5)[np.newaxis].T
-        obstacle_x = np.linspace(5, 10, 10)[np.newaxis].T
-        obstacle_y = np.linspace(0, 5, 10)[np.newaxis].T
+        obstacle_x = np.linspace(5, 10, nx)[np.newaxis].T
+        obstacle_y = np.linspace(0, 5, ny)[np.newaxis].T
         obstacle_1 = np.hstack([obstacle_x5, obstacle_y])
         obstacle_2 = np.hstack([obstacle_x, obstacle_y5])
         obstacle_points = np.vstack([obstacle_1, obstacle_2])
@@ -111,7 +110,6 @@ class TestPlanner(unittest.TestCase):
         step_size = 0.5
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
         rrt_planner.get_trajectory(start_position, end_position)
-        plot_rrt(rrt_planner, start_position, end_position, obstacle_points)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
