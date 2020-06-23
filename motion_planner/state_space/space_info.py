@@ -4,10 +4,9 @@ from motion_planner import *
 
 
 class SpaceInfo(object):
-    def __init__(self, robot_shape, alpha, collision_check_step_size,
-                 global_obstacle_points, boundaries=None):
+    def __init__(self, state_space, robot_shape, collision_check_step_size, global_obstacle_points):
         self._collision_check_step_size = collision_check_step_size
-        self.state = SE2(alpha, boundaries)
+        self.state = state_space
         self.collision = CollisionChecker(robot_shape, global_obstacle_points)
 
     def distance(self, first_position, second_position):

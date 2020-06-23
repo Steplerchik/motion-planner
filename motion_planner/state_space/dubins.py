@@ -1,38 +1,35 @@
 from random import uniform
 
-import numpy as np
-
-from motion_planner import wrap_angle
+from .dubins_source_code import *
 
 
-class SE2(object):
-    def __init__(self, alpha=0.0, boundaries=None):
-        self._alpha = alpha
+class Dubins(object):
+    def __init__(self, curvature, boundaries=None, dubins_step_size=0.1):
+        self._curvature = curvature
+        self._dubins_step_size = dubins_step_size
         if boundaries is None:
             self.boundaries = [-1e9, 1e9, -1e9, 1e9]
         else:
             self.boundaries = boundaries
 
-    @staticmethod
-    def interpolate(first_position, second_position, t=0.5):
-        x_coordinate = second_position[0] * t + first_position[0] * (1 - t)
-        y_coordinate = second_position[1] * t + first_position[1] * (1 - t)
-        angle = first_position[2]
-
-        if (len(first_position) == 3) and (len(second_position) == 3):
-            angle = wrap_angle(second_position[2] * t + first_position[2] * (1 - t))
-
-        interpolated_coordinates = np.array([x_coordinate, y_coordinate, angle])
+    def interpolate(self, first_position, second_position, t=0.5):
+        if t == 0:
+            return first_position
+        x_first, y_first, angle_first = first_position
+        x_second, y_second, angle_second = second_position
+        path_x, path_y, path_angle, _, _ = dubins_path_planning(x_first, y_first, angle_first,
+                                                                x_second, y_second, angle_second,
+                                                                self._curvature, self._dubins_step_size, t)
+        interpolated_coordinates = np.array([path_x[-1], path_y[-1], path_angle[-1]])
         return interpolated_coordinates
 
     def distance(self, first_position, second_position):
-        linear_distance = np.linalg.norm(second_position[:2] - first_position[:2])
-        angle_difference = 0
+        x_first, y_first, angle_first = first_position
+        x_second, y_second, angle_second = second_position
 
-        if (len(first_position) == 3) and (len(second_position) == 3):
-            angle_difference = wrap_angle(second_position[2] - first_position[2])
-
-        distance = np.sqrt(np.square(linear_distance) + np.square(self._alpha * angle_difference))
+        _, _, _, _, distance = dubins_path_planning(x_first, y_first, angle_first,
+                                                    x_second, y_second, angle_second,
+                                                    self._curvature, self._dubins_step_size)
         return distance
 
     @staticmethod
