@@ -1,7 +1,7 @@
-from random import uniform
-
 from motion_planner import SE2
 from .dubins_source_code import *
+
+max_boundary_coordinate = 1e9
 
 
 class Dubins(SE2):
@@ -9,7 +9,8 @@ class Dubins(SE2):
         self._curvature = curvature
         self._dubins_step_size = dubins_step_size
         if boundaries is None:
-            self.boundaries = [-1e9, 1e9, -1e9, 1e9]
+            self.boundaries = [-max_boundary_coordinate, max_boundary_coordinate, -max_boundary_coordinate,
+                               max_boundary_coordinate]
         else:
             self.boundaries = boundaries
         super().__init__(boundaries=boundaries)

@@ -4,12 +4,15 @@ import numpy as np
 
 from motion_planner import wrap_angle
 
+max_boundary_coordinate = 1e9
+
 
 class SE2(object):
     def __init__(self, alpha=0.0, boundaries=None):
         self._alpha = alpha
         if boundaries is None:
-            self.boundaries = [-1e9, 1e9, -1e9, 1e9]
+            self.boundaries = [-max_boundary_coordinate, max_boundary_coordinate, -max_boundary_coordinate,
+                               max_boundary_coordinate]
         else:
             self.boundaries = boundaries
 
