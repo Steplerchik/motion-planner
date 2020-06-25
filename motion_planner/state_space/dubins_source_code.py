@@ -5,6 +5,7 @@ Dubins path planner sample code
 author Atsushi Sakai(@Atsushi_twi)
 """
 import math
+from functools import lru_cache
 
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
@@ -200,6 +201,7 @@ def interpolate(ind, length, mode, max_curvature, origin_x, origin_y,
     return path_x, path_y, path_yaw, directions
 
 
+@lru_cache(maxsize=32)
 def dubins_path_planning(s_x, s_y, s_yaw, g_x, g_y, g_yaw, c, step_size=0.1, t_interpolate=1.0):
     """
     Dubins path planner

@@ -20,7 +20,7 @@ class SpaceInfo(object):
         normed_step_size = self._collision_check_step_size / distance
         t_points = np.arange(0, 1, normed_step_size)
         for t in t_points:
-            interpolated_point = self.state.interpolate(start, finish, t)
+            interpolated_point = self.state.interpolate(tuple(start), tuple(finish), t)
             if self.check(interpolated_point):
                 return False
         if self.check(finish):

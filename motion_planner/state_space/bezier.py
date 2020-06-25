@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from motion_planner import SE2
 from .bezier_source_code import *
 
@@ -14,6 +16,7 @@ class Bezier(SE2):
             self.boundaries = boundaries
         super().__init__(boundaries=boundaries)
 
+    @lru_cache(maxsize=32)
     def interpolate(self, first_position, second_position, t=0.5):
         x_first, y_first, angle_first = first_position
         x_second, y_second, angle_second = second_position

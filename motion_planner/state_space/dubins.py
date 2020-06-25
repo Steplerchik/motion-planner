@@ -15,6 +15,7 @@ class Dubins(SE2):
             self.boundaries = boundaries
         super().__init__(boundaries=boundaries)
 
+    @lru_cache(maxsize=32)
     def interpolate(self, first_position, second_position, t=0.5):
         if t == 0:
             return first_position

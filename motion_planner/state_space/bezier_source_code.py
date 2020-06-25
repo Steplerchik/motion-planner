@@ -4,6 +4,7 @@ The code base was taken from here: https://github.com/AtsushiSakai/PythonRobotic
 Path planning with Bezier curve.
 author: Atsushi Sakai(@Atsushi_twi)
 """
+from functools import lru_cache
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,6 +13,7 @@ import scipy.special
 show_animation = True
 
 
+@lru_cache(maxsize=32)
 def calc_4points_bezier_path(sx, sy, syaw, ex, ey, eyaw, offset):
     """
     Compute control points and path given start and end position.

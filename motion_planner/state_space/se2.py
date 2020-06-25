@@ -1,3 +1,4 @@
+from functools import lru_cache
 from random import uniform
 
 import numpy as np
@@ -17,6 +18,7 @@ class SE2(object):
             self.boundaries = boundaries
 
     @staticmethod
+    @lru_cache(maxsize=32)
     def interpolate(first_position, second_position, t=0.5):
         x_coordinate = second_position[0] * t + first_position[0] * (1 - t)
         y_coordinate = second_position[1] * t + first_position[1] * (1 - t)
@@ -55,5 +57,5 @@ class SE2(object):
         if edge_size > distance:
             return second_position
         t = edge_size / distance
-        new_point = self.interpolate(first_position, second_position, t)
+        new_point = self.interpolate(tuple(first_position), tuple(second_position), t)
         return new_point
