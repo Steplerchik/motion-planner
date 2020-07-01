@@ -48,3 +48,12 @@ def global2local(global_point, source_point):
 
 def wrap_angle(angle):
     return (angle + np.pi) % (2 * np.pi) - np.pi
+
+
+def remove(list_of_arrays, array):
+    index = 0
+    size = len(list_of_arrays)
+    while index != size and not np.array_equal(list_of_arrays[index], array):
+        index += 1
+    if index != size:
+        list_of_arrays.pop(index)

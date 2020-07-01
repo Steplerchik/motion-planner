@@ -37,3 +37,9 @@ class Graph(object):
                 current_vertex = parent_vertices[current_vertex]
             trajectory.appendleft(current_vertex)
         return trajectory, cost
+
+    def reconnect(self, new_parent_position, child_position, distance):
+        child_position = tuple(child_position)
+        old_parent_position = self._parents[child_position]
+        self.edges.remove((old_parent_position, child_position))
+        self.add_edge(new_parent_position, child_position, distance)
