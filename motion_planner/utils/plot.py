@@ -7,7 +7,7 @@ from motion_planner import global2local, Rectangle, SpaceInfo
 
 def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Rectangle(0, 0)):
     local_obstacle_points = np.apply_along_axis(global2local, 1, obstacle_points, current_coordinates)
-    x, y = shape._shape.exterior.xy
+    x, y = shape.shape.exterior.xy
     x_obstacle = local_obstacle_points[:, 0]
     y_obstacle = local_obstacle_points[:, 1]
 

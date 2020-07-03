@@ -1,4 +1,4 @@
-from .collision import CollisionChecker, Rectangle
+from .collision import CollisionChecker, Rectangle, RectangleWithCircles
 from .utils import global2local, local2global
 from .utils.math import wrap_angle, remove
 from .state_space.se2 import SE2
