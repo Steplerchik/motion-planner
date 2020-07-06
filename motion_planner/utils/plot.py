@@ -24,7 +24,7 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
 
 
 def plot_rrt(rrt, start_position, end_position, obstacle_points):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(dpi=250)
     trajectory = rrt.trajectory
     vertices = rrt.tree.vertices
     edges = rrt.tree.edges
@@ -52,4 +52,7 @@ def plot_rrt(rrt, start_position, end_position, obstacle_points):
     ax.scatter(end_position[0], end_position[1], c='black', linewidths=2)
 
     ax.set_aspect(1)
+    ax.set_title('Cost: %.2f [m]' % rrt.cost)
+    ax.set_xlabel('X, [m]')
+    ax.set_ylabel('Y, [m]')
     plt.show()
