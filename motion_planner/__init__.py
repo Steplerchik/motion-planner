@@ -10,3 +10,4 @@ from .planner_backend.graph import Graph
 from .planner_backend.planner_backend import RRTBasedPlanner
 from .planner_backend.rrt import RRT
 from .planner_backend.rrt_star import RRTStar
+from .utils import labirint
