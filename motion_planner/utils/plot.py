@@ -1,7 +1,8 @@
 import numpy as np
 from matplotlib import collections as mc
 from matplotlib import pyplot as plt
-
+from shapely.geometry import Point, box, MultiPoint
+from descartes import PolygonPatch
 from motion_planner import global2local, Rectangle, SpaceInfo
 
 
@@ -53,6 +54,33 @@ def plot_rrt(rrt, start_position, end_position, obstacle_points):
 
     ax.set_aspect(1)
     ax.set_title('Cost: %.2f [m]' % rrt.cost)
+    ax.set_xlabel('X, [m]')
+    ax.set_ylabel('Y, [m]')
+    plt.show()
+
+
+def plot_cost_map(navigation_function):
+    fig, ax = plt.subplots(dpi=250)
+    boundaries, obstacle_points = navigation_function.labyrinth
+    resolution = navigation_function.resolution
+    cost_map = navigation_function.cost_map
+    max_distance = np.sqrt((boundaries[1] - boundaries[0]) ** 2 + (boundaries[3] - boundaries[2]) ** 2)
+    for point in cost_map.keys():
+        cell = Point(point).buffer(resolution / 2).envelope
+        if cost_map[point] == 0:
+            cell_patch = PolygonPatch(cell, color='k')
+            ax.add_patch(cell_patch)
+        else:
+            x, y = cell.exterior.xy
+            grey = 1 - np.exp(-2 * cost_map[point] / max_distance)
+            ax.plot(x, y, color=(grey, grey, grey))
+    boundaries_polygon = box(boundaries[0], boundaries[2], boundaries[1], boundaries[3])
+    x, y = boundaries_polygon.exterior.xy
+    ax.plot(x, y)
+    x = obstacle_points[:, 0]
+    y = obstacle_points[:, 1]
+    ax.scatter(x, y, c='red')
+    ax.set_aspect(1)
     ax.set_xlabel('X, [m]')
     ax.set_ylabel('Y, [m]')
     plt.show()
