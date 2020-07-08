@@ -2,3 +2,4 @@ matplotlib==3.2.1
 numpy==1.18.5
 scipy==1.5.0
 descartes==1.1.0
+shapely==1.7.0
