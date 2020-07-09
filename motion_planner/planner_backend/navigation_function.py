@@ -15,12 +15,9 @@ class NavigationFunctionNF1(object):
         self.resolution = resolution
         self._cost_map = {tuple(goal_position[:2]): 0}
         self._neighbours = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
+        self.build_cost_map()
 
-    @property
-    def cost_map(self):
-        return self._cost_map
-
-    def get_cost_map(self):
+    def build_cost_map(self):
         cell_queue = PriorityQueue()
         cell_queue.put((0, tuple(self._goal_position[:2])))
 
@@ -40,6 +37,10 @@ class NavigationFunctionNF1(object):
                     if global_neighbour not in self._cost_map:
                         self._cost_map[global_neighbour] = new_cost
                         cell_queue.put((new_cost, global_neighbour))
+        return self._cost_map
+
+    @property
+    def get_cost_map(self):
         return self._cost_map
 
     def get_cost(self, current_position):

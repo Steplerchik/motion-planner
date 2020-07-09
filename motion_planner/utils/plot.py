@@ -63,7 +63,7 @@ def plot_cost_map(navigation_function):
     fig, ax = plt.subplots(dpi=250)
     boundaries, obstacle_points = navigation_function.labyrinth
     resolution = navigation_function.resolution
-    cost_map = navigation_function.cost_map
+    cost_map = navigation_function.get_cost_map
     max_distance = np.sqrt((boundaries[1] - boundaries[0]) ** 2 + (boundaries[3] - boundaries[2]) ** 2)
     for point in cost_map.keys():
         cell = Point(point).buffer(resolution / 2).envelope
