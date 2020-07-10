@@ -2,7 +2,7 @@ from queue import PriorityQueue
 
 from motion_planner import *
 
-unfeasible_cost = 1e9
+unfeasible_cost = float('inf')
 
 
 class NavigationFunctionNF1(object):

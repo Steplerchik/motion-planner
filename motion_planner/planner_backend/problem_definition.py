@@ -2,13 +2,13 @@ from motion_planner import *
 
 
 class ProblemDefinition(object):
-    def __init__(self, start, finish, planner, euristics, optimization_objective):
+    def __init__(self, start, finish, planner, optimization_objective):
         self.start_position = start
         self.end_position = finish
         self.planner = planner
-        self.optimization_objective = optimization_objective(euristics)
+        self.optimization_objective = optimization_objective
 
-    def get_trajectory(self):
+    def solve(self):
         self.planner.get_trajectory(self.start_position, self.end_position)
 
     @property
@@ -17,4 +17,4 @@ class ProblemDefinition(object):
 
     @property
     def cost(self):
-        return self.optimization_objective.cost(self.planner.trajectory, self.planner.cost)
+        return self.optimization_objective.cost(self.trajectory)

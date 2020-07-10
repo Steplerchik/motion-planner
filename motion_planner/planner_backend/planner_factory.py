@@ -17,7 +17,7 @@ class PlannerFactory(object):
                  ):
         boundaries, self.obstacle_points = the_labyrinth
         state_space = state_space(state_space_parameter, boundaries)
-        self._space_info = SpaceInfo(state_space, robot_shape, collision_check_step_size, self.obstacle_points)
+        self.space_info = SpaceInfo(state_space, robot_shape, collision_check_step_size, self.obstacle_points)
         self._iteration_count = iteration_count
         self._end_position_probability_sampling = end_position_probability_sampling
         self._step_size = step_size
@@ -25,5 +25,5 @@ class PlannerFactory(object):
         self.end_position = end_position
 
     def get_planner(self, planner_type):
-        rrt_planner = planner_type(self._space_info, self._iteration_count, self._end_position_probability_sampling, self._step_size)
+        rrt_planner = planner_type(self.space_info, self._iteration_count, self._end_position_probability_sampling, self._step_size)
         return rrt_planner
