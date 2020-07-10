@@ -67,13 +67,9 @@ def plot_cost_map(navigation_function):
     max_distance = np.sqrt((boundaries[1] - boundaries[0]) ** 2 + (boundaries[3] - boundaries[2]) ** 2)
     for point in cost_map.keys():
         cell = Point(point).buffer(resolution / 2).envelope
-        if cost_map[point] == 0:
-            cell_patch = PolygonPatch(cell, color='k')
-            ax.add_patch(cell_patch)
-        else:
-            x, y = cell.exterior.xy
-            grey = 1 - np.exp(-2 * cost_map[point] / max_distance)
-            ax.plot(x, y, color=(grey, grey, grey))
+        grey = 1 - np.exp(-3 * cost_map[point] / max_distance)
+        cell_patch = PolygonPatch(cell, color=(grey, grey, grey))
+        ax.add_patch(cell_patch)
     boundaries_polygon = box(boundaries[0], boundaries[2], boundaries[1], boundaries[3])
     x, y = boundaries_polygon.exterior.xy
     ax.plot(x, y)

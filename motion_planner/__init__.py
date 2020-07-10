@@ -13,3 +13,6 @@ from .planner_backend.rrt_star import RRTStar
 from .utils import labyrinth
 from .planner_backend.navigation_function import NavigationFunctionNF1
 from .planner_backend.planner_factory import PlannerFactory
+from .planner_backend.problem_definition import ProblemDefinition
+from .planner_backend.optimization_objective import OptimizationObjective
+from.planner_backend.rrt_wo_collision_check import RRTWithoutCollisionCheck

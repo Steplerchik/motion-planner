@@ -44,7 +44,7 @@ class NavigationFunctionNF1(object):
         return self._cost_map
 
     def get_cost(self, current_position):
-        position = Point(tuple(current_position[:2]))
+        position = Point(tuple([current_position[0], current_position[1]]))
         cost = unfeasible_cost
         for point in self._cost_map.keys():
             cell = Point(point).buffer(self.resolution / 2).envelope
