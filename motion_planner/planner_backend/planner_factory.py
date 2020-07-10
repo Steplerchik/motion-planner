@@ -24,6 +24,6 @@ class PlannerFactory(object):
         self.start_position = start_position
         self.end_position = end_position
 
-    def get_planner(self, planner_type):
+    def make_planner(self, planner_type):
         rrt_planner = planner_type(self.space_info, self._iteration_count, self._end_position_probability_sampling, self._step_size)
         return rrt_planner
