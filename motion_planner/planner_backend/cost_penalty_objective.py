@@ -4,9 +4,9 @@ from .navigation_function import unfeasible_cost
 
 
 class CostPenaltyObjective(object):
-    def __init__(self, space_info, euristics):
+    def __init__(self, space_info, heuristic):
         self.space_info = space_info
-        self.navigation_function = euristics
+        self.navigation_function = heuristic
 
     def cost(self, trajectory):
         trajectory = [np.array(list(point)) for point in trajectory]

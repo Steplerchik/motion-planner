@@ -12,11 +12,11 @@ class PlannerFactory(object):
                  end_position=np.array([9, 6.5, 0]),
                  robot_shape=Rectangle(1, 0.5),
                  collision_check_step_size=0.025,
-                 the_labyrinth=labyrinth.first(),
+                 labyrinth=labyrinth.first(),
                  state_space=SE2,
                  state_space_parameter=0
                  ):
-        boundaries, self.obstacle_points = the_labyrinth
+        boundaries, self.obstacle_points = labyrinth
         state_space = state_space(state_space_parameter, boundaries)
         self.space_info = SpaceInfo(state_space, robot_shape, collision_check_step_size, self.obstacle_points)
         self.start_position = start_position

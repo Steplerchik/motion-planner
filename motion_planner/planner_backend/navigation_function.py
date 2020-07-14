@@ -6,10 +6,10 @@ unfeasible_cost = float('inf')
 
 
 class NavigationFunctionNF1(object):
-    def __init__(self, goal_position, the_labyrinth=labyrinth.first(), resolution=1.0):
+    def __init__(self, goal_position, labyrinth=labyrinth.first(), resolution=1.0):
         self._goal_position = goal_position
-        self.labyrinth = the_labyrinth
-        boundaries, self._obstacle_points = the_labyrinth
+        self.labyrinth = labyrinth
+        boundaries, self._obstacle_points = labyrinth
         self._boundaries_polygon = box(boundaries[0], boundaries[2], boundaries[1], boundaries[3])
         self._obstacle_points_polygon = MultiPoint(self._obstacle_points)
         self.resolution = resolution
