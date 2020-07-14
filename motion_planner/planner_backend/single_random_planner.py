@@ -47,12 +47,7 @@ class SingleRandomPlanner(object):
         print('Initial population costs:\n', costs)
 
         for _ in range(self._iteration_count):
-            mutated_population = []
-            mutated_costs = []
-            for chromosome in population:
-                mutated_chromosome = self.mutation_shift(chromosome)
-                mutated_population.append(mutated_chromosome)
-                mutated_costs.append(self.get_cost(mutated_chromosome))
+            mutated_population, mutated_costs = self.mutation_random_shift(start_position, end_position)
             population.extend(mutated_population)
             costs.extend(mutated_costs)
             sorted_population_with_costs = sorted(zip(population, costs), key=lambda t: t[1])[:self._chromosome_count]
@@ -96,3 +91,6 @@ class SingleRandomPlanner(object):
             mutated_chromosome.append(np.add(chromosome[index], shift))
         mutated_chromosome.append(chromosome[-1])
         return mutated_chromosome
+
+    def mutation_random_shift(self, start_position, end_position):
+        return self.initialize_population(start_position, end_position)
