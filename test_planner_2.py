@@ -25,7 +25,7 @@ def test_RRT():
     step_size = 0.5
     rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
 
-    rrt_planner.get_trajectory(start_position, end_position)
+    rrt_planner.build_trajectory(start_position, end_position)
     print(rrt_planner.cost)
 
 

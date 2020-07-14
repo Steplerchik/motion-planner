@@ -9,7 +9,7 @@ class ProblemDefinition(object):
         self.optimization_objective = optimization_objective
 
     def solve(self):
-        self.planner.get_trajectory(self.start_position, self.end_position)
+        self.planner.build_trajectory(self.start_position, self.end_position)
 
     @property
     def trajectory(self):

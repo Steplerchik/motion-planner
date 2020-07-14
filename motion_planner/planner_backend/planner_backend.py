@@ -37,7 +37,7 @@ class RRTBasedPlanner(ABC):
     def create_tree(self, start_position, end_position):
         raise NotImplementedError()
 
-    def get_trajectory(self, start_position, end_position):
+    def build_trajectory(self, start_position, end_position):
         self.create_tree(start_position, end_position)
         self._trajectory, self._cost = self.tree.find_trajectory(end_position)
         return self._trajectory

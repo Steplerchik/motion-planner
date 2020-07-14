@@ -54,7 +54,7 @@ class TestPlanner(unittest.TestCase):
         step_size = 0.5
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
 
-        rrt_planner.get_trajectory(start_position, end_position)
+        rrt_planner.build_trajectory(start_position, end_position)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
@@ -84,7 +84,7 @@ class TestPlanner(unittest.TestCase):
         end_position_probability_sampling = 0.1
         step_size = 0.5
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
-        rrt_planner.get_trajectory(start_position, end_position)
+        rrt_planner.build_trajectory(start_position, end_position)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
@@ -109,7 +109,7 @@ class TestPlanner(unittest.TestCase):
         end_position_probability_sampling = 0.3
         step_size = 0.5
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
-        rrt_planner.get_trajectory(start_position, end_position)
+        rrt_planner.build_trajectory(start_position, end_position)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
@@ -134,7 +134,7 @@ class TestPlanner(unittest.TestCase):
         end_position_probability_sampling = 0.5
         step_size = 0.5
         rrt_planner = RRT(space_info, iteration_count, end_position_probability_sampling, step_size)
-        rrt_planner.get_trajectory(start_position, end_position)
+        rrt_planner.build_trajectory(start_position, end_position)
         print(rrt_planner.cost)
         self.assertTrue(True)
 
@@ -160,7 +160,7 @@ class TestPlanner(unittest.TestCase):
         step_size = 0.5
         rrt_planner = RRTStar(space_info, iteration_count, end_position_probability_sampling, step_size, step_size)
 
-        rrt_planner.get_trajectory(start_position, end_position)
+        rrt_planner.build_trajectory(start_position, end_position)
         print(rrt_planner.cost)
         self.assertTrue(True)
 

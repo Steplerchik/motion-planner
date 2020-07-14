@@ -1,11 +1,5 @@
 from motion_planner import *
 
-planner_default_parameters = {
-    'iteration_count': 200,
-    'end_position_probability_sampling': 0.1,
-    'edge_size': 0.5
-}
-
 
 class ProblemDefinitionFactory(object):
     def __init__(self, start_position=np.array([3.5, 1, np.pi / 2]),
@@ -21,8 +15,8 @@ class ProblemDefinitionFactory(object):
                  heuristic_resolution=0.5,
                  optimization_objective=CostPenaltyObjective,
                  ):
-        if planner_parameters is None:
-            planner_parameters = planner_default_parameters
+        self.planner_type = planner_type
+        self.planner_parameters = planner_parameters
         self.planner_factory = PlannerFactory(start_position=start_position,
                                               end_position=end_position,
                                               robot_shape=robot_shape,
@@ -33,6 +27,14 @@ class ProblemDefinitionFactory(object):
 
         self.navigation_function = heuristic(end_position, labyrinth, heuristic_resolution)
         self.optimization_objective = optimization_objective(self.planner_factory.space_info, self.navigation_function)
-        planner_parameters.update({'optimization_objective': self.optimization_objective})
-        planner = self.planner_factory.make_planner(planner_type, planner_parameters)
-        self.problem = ProblemDefinition(start_position, end_position, planner, self.optimization_objective)
+        self.start_position = start_position
+        self.end_position = end_position
+
+    def make_problem(self):
+        planner = self.planner_factory.make_planner(self.planner_type, self.planner_parameters)
+        return ProblemDefinition(self.start_position, self.end_position, planner, self.optimization_objective)
+
+    def make_optimization_problem(self):
+        planner = self.planner_factory.make_optimization_planner(self.planner_type, self.optimization_objective,
+                                                                 self.planner_parameters)
+        return ProblemDefinition(self.start_position, self.end_position, planner, self.optimization_objective)

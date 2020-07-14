@@ -1,11 +1,5 @@
 from motion_planner import *
 
-planner_parameters = {
-    'iteration_count': 200,
-    'end_position_probability_sampling': 0.1,
-    'edge_size': 0.5
-}
-
 
 class PlannerFactory(object):
     def __init__(self, start_position=np.array([3.5, 1, np.pi / 2]),
@@ -25,7 +19,11 @@ class PlannerFactory(object):
     def make_planner(self, planner_type, parameters=None):
         if parameters is None:
             parameters = {}
-        planner_parameters.update(parameters)
-        rrt_planner = planner_type(self.space_info)
-        rrt_planner.__dict__.update(planner_parameters)
+        rrt_planner = planner_type(self.space_info, **parameters)
+        return rrt_planner
+
+    def make_optimization_planner(self, planner_type, optimization_objective, parameters=None):
+        if parameters is None:
+            parameters = {}
+        rrt_planner = planner_type(self.space_info, optimization_objective, **parameters)
         return rrt_planner
