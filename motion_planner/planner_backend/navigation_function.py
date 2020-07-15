@@ -15,6 +15,10 @@ class NavigationFunctionNF1(object):
         self.resolution = resolution
         self._cost_map = {tuple(goal_position[:2]): 0}
         self._neighbours = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
+        self._bilinear_point_groups = [[(1, 0), (1, 1), (0, 1)],
+                                       [(0, 1), (-1, 1), (-1, 0)],
+                                       [(-1, 0), (-1, -1), (0, -1)],
+                                       [(0, -1), (1, -1), (1, 0)]]
         self.build_cost_map()
 
     def build_cost_map(self):
@@ -53,4 +57,33 @@ class NavigationFunctionNF1(object):
         cost = unfeasible_cost
         if cell_point in self._cost_map.keys():
             cost = self._cost_map[cell_point]
+            for point_group in self._bilinear_point_groups:
+                global_point_group = []
+                for point in point_group:
+                    point_x = cell_position_x + point[0] * resolution
+                    point_y = cell_position_y + point[1] * resolution
+                    global_point_group.append((point_x, point_y))
+
+                if all(point in self._cost_map for point in global_point_group):
+                    points = [(cell_point[0], cell_point[1], self._cost_map[cell_point])]
+                    for point in global_point_group:
+                        points.append((point[0], point[1], self._cost_map[point]))
+                    cost = self.bilinear_interpolation(current_position[0], current_position[1], points)
+                    if cost:
+                        return cost
         return cost
+
+    @staticmethod
+    def bilinear_interpolation(x, y, points):
+        sorted_points = sorted(points)
+        (x1, y1, q11), (_x1, y2, q12), (x2, _y1, q21), (_x2, _y2, q22) = sorted_points
+
+        if x1 != _x1 or x2 != _x2 or y1 != _y1 or y2 != _y2:
+            return False
+        if not x1 <= x <= x2 or not y1 <= y <= y2:
+            return False
+        return (q11 * (x2 - x) * (y2 - y) +
+                q21 * (x - x1) * (y2 - y) +
+                q12 * (x2 - x) * (y - y1) +
+                q22 * (x - x1) * (y - y1)
+                ) / ((x2 - x1) * (y2 - y1) + 0.0)

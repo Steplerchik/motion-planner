@@ -55,8 +55,6 @@ class GeneticPlanner(object):
         trajectory_cost = population_costs[0]
         for index in range(1, len(trajectory)):
             self.insert_node(trajectory[index - 1], trajectory[index])
-        print('Initial population:\n', population)
-        print('Initial population costs:\n', population_costs)
 
         for _ in range(self._iteration_count):
             mutated_population = population

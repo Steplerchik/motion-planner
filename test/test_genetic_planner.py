@@ -25,10 +25,14 @@ class TestPlanner(unittest.TestCase):
         problem = problem_definition_factory.make_optimization_problem()
         problem.solve()
         cost = problem.cost
-        print("Real cost: %.2f [m]" % cost)
         planner_cost = problem.planner.cost
-        print("Planner cost: %.2f [m]" % planner_cost)
         self.assertTrue(cost == planner_cost)
+
+        start = problem.start_position
+        finish = problem.end_position
+        obstacle_points = problem_definition_factory.planner_factory.obstacle_points
+        planner = problem.planner
+        plot_genetic(planner, start, finish, obstacle_points)
 
 
 if __name__ == '__main__':
