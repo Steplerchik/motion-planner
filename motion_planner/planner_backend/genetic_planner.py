@@ -1,7 +1,7 @@
 from motion_planner import *
 
 
-class SimpleRandomPlanner(object):
+class GeneticPlanner(object):
     def __init__(self, space_info, optimization_objective, iteration_count=200, intermediate_point_count=1,
                  chromosome_count=1, mutations=None, mutation_parameters=None):
         if mutations is None:

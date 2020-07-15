@@ -5,7 +5,7 @@ from motion_planner import *
 
 class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
-        problem_definition_factory = ProblemDefinitionFactory(planner_type=SimpleRandomPlanner,
+        problem_definition_factory = ProblemDefinitionFactory(planner_type=GeneticPlanner,
                                                               planner_parameters={
                                                                   'intermediate_point_count': 1,
                                                                   'chromosome_count': 5,
