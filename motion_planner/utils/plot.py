@@ -24,7 +24,9 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
     plt.show()
 
 
-def plot_rrt(rrt, start_position, end_position, obstacle_points):
+def plot_rrt(rrt, start_position, end_position, obstacle_points, cost=None):
+    if cost is None:
+        cost = rrt.cost
     fig, ax = plt.subplots(dpi=150)
     trajectory = rrt.trajectory
     vertices = rrt.tree.vertices
@@ -53,7 +55,7 @@ def plot_rrt(rrt, start_position, end_position, obstacle_points):
     ax.scatter(end_position[0], end_position[1], c='black', linewidths=2)
 
     ax.set_aspect(1)
-    ax.set_title('Cost: %.2f [m]' % rrt.cost)
+    ax.set_title('Cost: %.2f [m]' % cost)
     ax.set_xlabel('X, [m]')
     ax.set_ylabel('Y, [m]')
     plt.show()
@@ -81,7 +83,9 @@ def plot_cost_map(navigation_function):
     ax.set_ylabel('Y, [m]')
     plt.show()
 
-def plot_genetic(planner, start_position, end_position, obstacle_points):
+def plot_genetic(planner, start_position, end_position, obstacle_points, cost=None):
+    if cost is None:
+        cost = planner.cost
     fig, ax = plt.subplots(dpi=150)
     trajectory = planner.trajectory
     vertices = planner.tree.vertices
@@ -113,7 +117,7 @@ def plot_genetic(planner, start_position, end_position, obstacle_points):
     ax.scatter(end_position[0], end_position[1], c='black', linewidths=2)
 
     ax.set_aspect(1)
-    ax.set_title('Cost: %.2f [m]' % planner.cost)
+    ax.set_title('Cost: %.2f [m]' % cost)
     ax.set_xlabel('X, [m]')
     ax.set_ylabel('Y, [m]')
     plt.show()

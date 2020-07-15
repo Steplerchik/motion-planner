@@ -9,6 +9,8 @@ class CostPenaltyObjective(object):
         self.navigation_function = heuristic
 
     def cost(self, trajectory):
+        if not trajectory:
+            return 0
         trajectory = [np.array(list(point)) for point in trajectory]
         distance = self.distance(trajectory)
         penalty = self.penalty(trajectory)

@@ -2,7 +2,7 @@ from motion_planner import *
 
 
 class RRTStar(RRTBasedPlanner):
-    def __init__(self, space_info, iteration_count=200, end_position_probability_sampling=0.1, edge_size=0,
+    def __init__(self, space_info, iteration_count=200, end_position_probability_sampling=0.1, edge_size=0.5,
                  near_radius=0.5):
         self._min_x, self._max_x, self._min_y, self._max_y = space_info.state.boundaries
         self._iteration_count = iteration_count
