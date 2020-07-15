@@ -48,8 +48,13 @@ class SimpleRandomPlanner(object):
         self._tree.add_edge(parent_position, child_position, None)
 
     def build_trajectory(self, start_position, end_position):
+        self._tree = Graph(start_position)
         population = self.initialize_population(start_position, end_position)
         population_costs = self.get_population_cost(population)
+        trajectory = population[0]
+        trajectory_cost = population_costs[0]
+        for index in range(1, len(trajectory)):
+            self.insert_node(trajectory[index - 1], trajectory[index])
         print('Initial population:\n', population)
         print('Initial population costs:\n', population_costs)
 
@@ -66,9 +71,15 @@ class SimpleRandomPlanner(object):
             population = list(population)
             population_costs = list(population_costs)
 
-        self.create_tree(population[0])
-        self._trajectory = self.tree.vertices
-        self._cost = population_costs[0]
+            old_trajectory = trajectory
+            trajectory = population[0]
+            trajectory_cost = population_costs[0]
+
+            if not np.array_equal(old_trajectory, trajectory):
+                for index in range(1, len(trajectory)):
+                    self.insert_node(trajectory[index - 1], trajectory[index])
+        self._trajectory = [tuple(position) for position in trajectory]
+        self._cost = trajectory_cost
 
     def create_tree(self, chromosome):
         self._tree = Graph(chromosome[0])

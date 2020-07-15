@@ -9,7 +9,7 @@ class TestPlanner(unittest.TestCase):
                                                               planner_parameters={
                                                                   'intermediate_point_count': 1,
                                                                   'chromosome_count': 5,
-                                                                  'iteration_count': 5,
+                                                                  'iteration_count': 10,
                                                                   'mutations': [RandomSampleMutation,
                                                                                 SteerMutation,
                                                                                 AddPointMutation,
@@ -29,12 +29,6 @@ class TestPlanner(unittest.TestCase):
         planner_cost = problem.planner.cost
         print("Planner cost: %.2f [m]" % planner_cost)
         self.assertTrue(cost == planner_cost)
-
-        start = problem_definition_factory.planner_factory.start_position
-        finish = problem_definition_factory.planner_factory.end_position
-        obstacle_points = problem_definition_factory.planner_factory.obstacle_points
-        planner = problem.planner
-        plot_rrt(planner, start, finish, obstacle_points)
 
 
 if __name__ == '__main__':

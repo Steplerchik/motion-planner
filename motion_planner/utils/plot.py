@@ -25,7 +25,7 @@ def plot_local_shape_obstacles(obstacle_points, current_coordinates, shape=Recta
 
 
 def plot_rrt(rrt, start_position, end_position, obstacle_points):
-    fig, ax = plt.subplots(dpi=250)
+    fig, ax = plt.subplots(dpi=150)
     trajectory = rrt.trajectory
     vertices = rrt.tree.vertices
     edges = rrt.tree.edges
@@ -60,7 +60,7 @@ def plot_rrt(rrt, start_position, end_position, obstacle_points):
 
 
 def plot_cost_map(navigation_function):
-    fig, ax = plt.subplots(dpi=250)
+    fig, ax = plt.subplots(dpi=150)
     boundaries, obstacle_points = navigation_function.labyrinth
     resolution = navigation_function.resolution
     cost_map = navigation_function.get_cost_map
@@ -77,6 +77,43 @@ def plot_cost_map(navigation_function):
     y = obstacle_points[:, 1]
     ax.scatter(x, y, c='red')
     ax.set_aspect(1)
+    ax.set_xlabel('X, [m]')
+    ax.set_ylabel('Y, [m]')
+    plt.show()
+
+def plot_genetic(planner, start_position, end_position, obstacle_points):
+    fig, ax = plt.subplots(dpi=150)
+    trajectory = planner.trajectory
+    vertices = planner.tree.vertices
+    edges = planner.tree.edges
+    tree_point_x_coordinates = [x for x, y, angle in vertices]
+    tree_point_y_coordinates = [y for x, y, angle in vertices]
+    obstacle_x_coordinates = obstacle_points[:, 0]
+    obstacle_y_coordinates = obstacle_points[:, 1]
+
+    ax.scatter(obstacle_x_coordinates, obstacle_y_coordinates, c='red')
+
+    ax.scatter(tree_point_x_coordinates, tree_point_y_coordinates, c='cyan')
+    tree_edges = [
+        ((edge[0][0], edge[0][1]), (edge[1][0], edge[1][1]))
+        for edge in edges]
+    tree_lines = mc.LineCollection(tree_edges, linewidths=2, cmap='BuPu')
+    x = np.arange(len(tree_edges))
+    tree_lines.set_array(x)
+    ax.add_collection(tree_lines)
+    # fig.colorbar(tree_lines)
+
+    if trajectory is not None:
+        trajectory_edges = [((trajectory[i][0], trajectory[i][1]), (trajectory[i + 1][0], trajectory[i + 1][1])) for i
+                            in range(len(trajectory) - 1)]
+        trajectory_lines = mc.LineCollection(trajectory_edges, colors='green', linewidths=4)
+        ax.add_collection(trajectory_lines)
+
+    ax.scatter(start_position[0], start_position[1], c='black', linewidths=2)
+    ax.scatter(end_position[0], end_position[1], c='black', linewidths=2)
+
+    ax.set_aspect(1)
+    ax.set_title('Cost: %.2f [m]' % planner.cost)
     ax.set_xlabel('X, [m]')
     ax.set_ylabel('Y, [m]')
     plt.show()
