@@ -5,11 +5,14 @@ from motion_planner import *
 
 class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
-        problem_definition_factory = ProblemDefinitionFactory(planner_type=SingleRandomPlanner,
+        problem_definition_factory = ProblemDefinitionFactory(planner_type=SimpleRandomPlanner,
                                                               planner_parameters={
-                                                                  'intermediate_point_count': 5,
+                                                                  'intermediate_point_count': 2,
                                                                   'chromosome_count': 5,
-                                                                  'iteration_count': 5
+                                                                  'iteration_count': 5,
+                                                                  'mutations': [RandomSampleMutation,
+                                                                                SteerMutation],
+                                                                  'mutation_parameters': [{}, {'edge_size': 1.0}]
                                                               }
                                                               )
         problem = problem_definition_factory.make_optimization_problem()

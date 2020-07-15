@@ -17,4 +17,8 @@ from .planner_backend.problem_definition import ProblemDefinition
 from .planner_backend.cost_penalty_objective import CostPenaltyObjective
 from .planner_backend.rrt_wo_collision_check import RRTWithoutCollisionCheck
 from .planner_backend.problem_definition_factory import ProblemDefinitionFactory
-from .planner_backend.single_random_planner import SingleRandomPlanner
+from .planner_backend.mutation import Mutation
+from .planner_backend.random_sample_mutation import RandomSampleMutation
+from .planner_backend.steer_mutation import SteerMutation
+from .planner_backend.simple_random_planner import SimpleRandomPlanner
+
