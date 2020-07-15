@@ -17,9 +17,7 @@ class ProblemDefinitionFactory(object):
                  ):
         self.planner_type = planner_type
         self.planner_parameters = planner_parameters
-        self.planner_factory = PlannerFactory(start_position=start_position,
-                                              end_position=end_position,
-                                              robot_shape=robot_shape,
+        self.planner_factory = PlannerFactory(robot_shape=robot_shape,
                                               collision_check_step_size=collision_check_step_size,
                                               labyrinth=labyrinth,
                                               state_space=state_space,
@@ -27,14 +25,14 @@ class ProblemDefinitionFactory(object):
 
         self.navigation_function = heuristic(end_position, labyrinth, heuristic_resolution)
         self.optimization_objective = optimization_objective(self.planner_factory.space_info, self.navigation_function)
-        self.start_position = start_position
-        self.end_position = end_position
+        self._start_position = start_position
+        self._end_position = end_position
 
     def make_problem(self):
         planner = self.planner_factory.make_planner(self.planner_type, self.planner_parameters)
-        return ProblemDefinition(self.start_position, self.end_position, planner, self.optimization_objective)
+        return ProblemDefinition(self._start_position, self._end_position, planner, self.optimization_objective)
 
     def make_optimization_problem(self):
         planner = self.planner_factory.make_optimization_planner(self.planner_type, self.optimization_objective,
                                                                  self.planner_parameters)
-        return ProblemDefinition(self.start_position, self.end_position, planner, self.optimization_objective)
+        return ProblemDefinition(self._start_position, self._end_position, planner, self.optimization_objective)

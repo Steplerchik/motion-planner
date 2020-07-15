@@ -28,12 +28,6 @@ class TestPlanner(unittest.TestCase):
         planner_cost = problem.planner.cost
         self.assertTrue(cost == planner_cost)
 
-        start = problem.start_position
-        finish = problem.end_position
-        obstacle_points = problem_definition_factory.planner_factory.obstacle_points
-        planner = problem.planner
-        plot_genetic(planner, start, finish, obstacle_points)
-
 
 if __name__ == '__main__':
     unittest.main()
