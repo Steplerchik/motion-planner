@@ -1,6 +1,3 @@
-from motion_planner import *
-
-
 class ProblemDefinition(object):
     def __init__(self, start, finish, planner, optimization_objective):
         self.start_position = start
