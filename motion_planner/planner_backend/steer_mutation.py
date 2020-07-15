@@ -1,5 +1,4 @@
 from motion_planner import Mutation
-import numpy as np
 
 
 class SteerMutation(Mutation):
