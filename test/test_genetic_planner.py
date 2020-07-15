@@ -20,13 +20,21 @@ class TestPlanner(unittest.TestCase):
                                                                       {'probability': 0.8},
                                                                       {'probability': 0.2}
                                                                   ]
-                                                              }
+                                                              },
+                                                              optimization_objective_parameters={'penalty_weight': 1.0}
                                                               )
         problem = problem_definition_factory.make_optimization_problem()
         problem.solve()
         cost = problem.cost
         planner_cost = problem.planner.cost
         self.assertTrue(cost == planner_cost)
+
+        start = problem.start_position
+        finish = problem.end_position
+        obstacle_points = problem_definition_factory.planner_factory.obstacle_points
+        planner = problem.planner
+        cost = problem.cost
+        plot_genetic(planner, start, finish, obstacle_points, cost)
 
 
 if __name__ == '__main__':

@@ -14,7 +14,10 @@ class ProblemDefinitionFactory(object):
                  heuristic=NavigationFunctionNF1,
                  heuristic_resolution=0.5,
                  optimization_objective=CostPenaltyObjective,
+                 optimization_objective_parameters=None
                  ):
+        if optimization_objective_parameters is None:
+            optimization_objective_parameters = {}
         self.planner_type = planner_type
         self.planner_parameters = planner_parameters
         self.planner_factory = PlannerFactory(robot_shape=robot_shape,
@@ -24,7 +27,8 @@ class ProblemDefinitionFactory(object):
                                               state_space_parameter=state_space_parameter)
 
         self.navigation_function = heuristic(end_position, labyrinth, heuristic_resolution)
-        self.optimization_objective = optimization_objective(self.planner_factory.space_info, self.navigation_function)
+        self.optimization_objective = optimization_objective(self.planner_factory.space_info, self.navigation_function,
+                                                             **optimization_objective_parameters)
         self._start_position = start_position
         self._end_position = end_position
 

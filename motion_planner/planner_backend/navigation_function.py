@@ -68,16 +68,15 @@ class NavigationFunctionNF1(object):
                     points = [(cell_point[0], cell_point[1], self._cost_map[cell_point])]
                     for point in global_point_group:
                         points.append((point[0], point[1], self._cost_map[point]))
-                    cost = self.bilinear_interpolation(current_position[0], current_position[1], points)
-                    if cost:
-                        return cost
+                    bilinear_cost = self.bilinear_interpolation(current_position[0], current_position[1], points)
+                    if bilinear_cost:
+                        return bilinear_cost
         return cost
 
     @staticmethod
     def bilinear_interpolation(x, y, points):
         sorted_points = sorted(points)
         (x1, y1, q11), (_x1, y2, q12), (x2, _y1, q21), (_x2, _y2, q22) = sorted_points
-
         if x1 != _x1 or x2 != _x2 or y1 != _y1 or y2 != _y2:
             return False
         if not x1 <= x <= x2 or not y1 <= y <= y2:
