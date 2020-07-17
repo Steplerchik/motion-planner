@@ -6,35 +6,29 @@ from motion_planner import *
 class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
         problem_definition_factory = ProblemDefinitionFactory(planner_type=GeneticPlanner,
+                                                              labyrinth=labyrinth.second(),
                                                               planner_parameters={
-                                                                  'intermediate_point_count': 1,
+                                                                  'intermediate_point_count': 4,
                                                                   'chromosome_count': 5,
                                                                   'iteration_count': 10,
                                                                   'mutations': [RandomSampleMutation,
-                                                                                SteerMutation,
                                                                                 AddPointMutation,
-                                                                                RemovePointMutation],
+                                                                                RemovePointMutation,
+                                                                                SteerMutation
+                                                                                ],
                                                                   'mutation_parameters': [
-                                                                      {'intermediate_point_count': 1},
-                                                                      {'edge_size': 0.5},
+                                                                      {'intermediate_point_count': 4},
                                                                       {'probability': 0.8},
-                                                                      {'probability': 0.2}
-                                                                  ]
+                                                                      {'probability': 0.2},
+                                                                      {'edge_size': 1.0}]
                                                               },
-                                                              optimization_objective_parameters={'penalty_weight': 1.0}
+                                                              optimization_objective_parameters={'penalty_weight': 10000000.0}
                                                               )
         problem = problem_definition_factory.make_optimization_problem()
         problem.solve()
         cost = problem.cost
         planner_cost = problem.planner.cost
         self.assertTrue(cost == planner_cost)
-
-        start = problem.start_position
-        finish = problem.end_position
-        obstacle_points = problem_definition_factory.planner_factory.obstacle_points
-        planner = problem.planner
-        cost = problem.cost
-        plot_genetic(planner, start, finish, obstacle_points, cost)
 
 
 if __name__ == '__main__':

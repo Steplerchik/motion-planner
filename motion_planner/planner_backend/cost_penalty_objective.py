@@ -34,27 +34,36 @@ class CostPenaltyObjective(object):
         cost_after_obstacle = None
         for point in trajectory[1:]:
             point_cost = self.navigation_function.get_cost(point)
-            if previous_point_cost != unfeasible_cost and point_cost == unfeasible_cost:
+
+            previous_point_in_collision = self.space_info.check(previous_point)
+            point_in_collision = self.space_info.check(point)
+
+            if ((previous_point_cost != unfeasible_cost) and (not previous_point_in_collision)) and (point_cost == unfeasible_cost or point_in_collision):
                 cost_before_obstacle = previous_point_cost
-            elif previous_point_cost == unfeasible_cost and point_cost != unfeasible_cost:
+            elif (previous_point_cost == unfeasible_cost or previous_point_in_collision) and ((point_cost != unfeasible_cost) and (not point_in_collision)):
                 cost_after_obstacle = point_cost
-            elif previous_point_cost == unfeasible_cost and point_cost == unfeasible_cost:
+            elif (previous_point_cost == unfeasible_cost or previous_point_in_collision) and (point_cost == unfeasible_cost or point_in_collision):
                 continue
             else:
                 collision_between_points = not self.space_info.check_trajectory(previous_point, point)
                 if collision_between_points:
-                    previous_point_in_collision = self.space_info.check(previous_point)
-                    point_in_collision = self.space_info.check(point)
-                    if point_in_collision and not previous_point_in_collision:
-                        cost_before_obstacle = previous_point_cost
-                    elif previous_point_in_collision and not point_in_collision:
-                        cost_after_obstacle = point_cost
-                    elif (not point_in_collision) and (not previous_point_in_collision):
-                        cost_before_obstacle = previous_point_cost
-                        cost_after_obstacle = point_cost
+                    cost_before_obstacle = previous_point_cost
+                    cost_after_obstacle = point_cost
+                    # if point_in_collision and not previous_point_in_collision:
+                    #     cost_before_obstacle = previous_point_cost
+                    #     print('Point in collision!')
+                    #     print('cost before obstacle:', cost_before_obstacle)
+                    # elif previous_point_in_collision and not point_in_collision:
+                    #     cost_after_obstacle = point_cost
+                    #     print('Previous point in collision!')
+                    #     print('cost after obstacle:', cost_after_obstacle)
+                    # elif (not point_in_collision) and (not previous_point_in_collision):
+                    #     print('Not point not previous!!!')
+                    #     cost_before_obstacle = previous_point_cost
+                    #     cost_after_obstacle = point_cost
 
             if cost_before_obstacle is not None and cost_after_obstacle is not None:
-                penalty += cost_before_obstacle - cost_after_obstacle
+                penalty += abs(cost_before_obstacle - cost_after_obstacle)
                 cost_before_obstacle = None
                 cost_after_obstacle = None
             previous_point = point
