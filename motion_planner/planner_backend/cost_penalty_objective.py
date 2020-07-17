@@ -42,13 +42,9 @@ class CostPenaltyObjective(object):
                 cost_before_obstacle = previous_point_cost
             elif (previous_point_cost == unfeasible_cost or previous_point_in_collision) and ((point_cost != unfeasible_cost) and (not point_in_collision)):
                 cost_after_obstacle = point_cost
-            elif (previous_point_cost == unfeasible_cost or previous_point_in_collision) and (point_cost == unfeasible_cost or point_in_collision):
-                continue
-            else:
-                collision_between_points = not self.space_info.check_trajectory(previous_point, point)
-                if collision_between_points:
-                    cost_before_obstacle = previous_point_cost
-                    cost_after_obstacle = point_cost
+            elif not self.space_info.check_trajectory(previous_point, point):
+                cost_before_obstacle = previous_point_cost
+                cost_after_obstacle = point_cost
 
             if cost_before_obstacle is not None and cost_after_obstacle is not None:
                 penalty += abs(cost_before_obstacle - cost_after_obstacle)
