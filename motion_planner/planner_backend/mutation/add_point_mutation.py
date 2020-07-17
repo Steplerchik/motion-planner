@@ -21,7 +21,10 @@ class AddPointMutation(Mutation):
         return new_population
 
     def get_chromosome(self, chromosome):
-        divide_index = np.random.randint(1, len(chromosome) - 1)
+        if len(chromosome) == 2:
+            divide_index = 1
+        else:
+            divide_index = np.random.randint(1, len(chromosome) - 1)
         new_chromosome = chromosome[:divide_index]
         random_point = self._space_info.state.interpolate(tuple(chromosome[divide_index - 1]),
                                                           tuple(chromosome[divide_index]))

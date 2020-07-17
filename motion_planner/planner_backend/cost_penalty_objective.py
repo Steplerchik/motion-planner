@@ -49,18 +49,6 @@ class CostPenaltyObjective(object):
                 if collision_between_points:
                     cost_before_obstacle = previous_point_cost
                     cost_after_obstacle = point_cost
-                    # if point_in_collision and not previous_point_in_collision:
-                    #     cost_before_obstacle = previous_point_cost
-                    #     print('Point in collision!')
-                    #     print('cost before obstacle:', cost_before_obstacle)
-                    # elif previous_point_in_collision and not point_in_collision:
-                    #     cost_after_obstacle = point_cost
-                    #     print('Previous point in collision!')
-                    #     print('cost after obstacle:', cost_after_obstacle)
-                    # elif (not point_in_collision) and (not previous_point_in_collision):
-                    #     print('Not point not previous!!!')
-                    #     cost_before_obstacle = previous_point_cost
-                    #     cost_after_obstacle = point_cost
 
             if cost_before_obstacle is not None and cost_after_obstacle is not None:
                 penalty += abs(cost_before_obstacle - cost_after_obstacle)

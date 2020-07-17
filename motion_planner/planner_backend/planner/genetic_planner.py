@@ -1,5 +1,7 @@
 from motion_planner import *
 
+import copy
+
 
 class GeneticPlanner(object):
     def __init__(self, space_info, optimization_objective, iteration_count=200, intermediate_point_count=1,
@@ -57,7 +59,7 @@ class GeneticPlanner(object):
             self.insert_node(trajectory[index - 1], trajectory[index])
 
         for _ in range(self._iteration_count):
-            mutated_population = population
+            mutated_population = copy.deepcopy(population)
             for mutation in self._mutations:
                 mutated_population = mutation.mutate(mutated_population)
             mutated_population_costs = self.get_population_cost(mutated_population)

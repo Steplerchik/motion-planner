@@ -9,7 +9,7 @@ class TestPlanner(unittest.TestCase):
                                                               labyrinth=labyrinth.second(),
                                                               planner_parameters={
                                                                   'intermediate_point_count': 4,
-                                                                  'chromosome_count': 5,
+                                                                  'chromosome_count': 10,
                                                                   'iteration_count': 10,
                                                                   'mutations': [RandomSampleMutation,
                                                                                 AddPointMutation,
@@ -18,9 +18,9 @@ class TestPlanner(unittest.TestCase):
                                                                                 ],
                                                                   'mutation_parameters': [
                                                                       {'intermediate_point_count': 4},
-                                                                      {'probability': 0.8},
-                                                                      {'probability': 0.2},
-                                                                      {'edge_size': 1.0}]
+                                                                      {'probability': 0.5},
+                                                                      {'probability': 0.5},
+                                                                      {'edge_size': 0.5}]
                                                               },
                                                               optimization_objective_parameters={'penalty_weight': 10000000.0}
                                                               )
@@ -28,6 +28,7 @@ class TestPlanner(unittest.TestCase):
         problem.solve()
         cost = problem.cost
         planner_cost = problem.planner.cost
+
         self.assertTrue(cost == planner_cost)
 
 
