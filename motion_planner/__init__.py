@@ -22,5 +22,6 @@ from .planner_backend.mutation.random_sample_mutation import RandomSampleMutatio
 from .planner_backend.mutation.steer_mutation import SteerMutation
 from .planner_backend.mutation.add_point_mutation import AddPointMutation
 from .planner_backend.mutation.remove_point_mutation import RemovePointMutation
+from .planner_backend.mutation.add_and_steer_mutation import AddAndSteerMutation
 from .planner_backend.planner.genetic_planner import GeneticPlanner
 from .planner_backend.navigation_function_double import NavigationFunctionDoubleNF1

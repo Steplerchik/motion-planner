@@ -58,7 +58,8 @@ class GeneticPlanner(object):
         for index in range(1, len(trajectory)):
             self.insert_node(trajectory[index - 1], trajectory[index])
 
-        for _ in range(self._iteration_count):
+        for i in range(self._iteration_count):
+            old_trajectory = trajectory
             mutated_population = copy.deepcopy(population)
             for mutation in self._mutations:
                 mutated_population = mutation.mutate(mutated_population)
@@ -71,7 +72,6 @@ class GeneticPlanner(object):
             population = list(population)
             population_costs = list(population_costs)
 
-            old_trajectory = trajectory
             trajectory = population[0]
             trajectory_cost = population_costs[0]
 

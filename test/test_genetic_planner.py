@@ -6,23 +6,21 @@ from motion_planner import *
 class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
         problem_definition_factory = ProblemDefinitionFactory(planner_type=GeneticPlanner,
-                                                              end_position=np.array([6, 6.5, 0]),
+                                                              end_position=np.array([2, 5, 0]),
                                                               labyrinth=labyrinth.third(),
                                                               heuristic=NavigationFunctionDoubleNF1,
                                                               planner_parameters={
-                                                                  'intermediate_point_count': 3,
+                                                                  'intermediate_point_count': 2,
                                                                   'chromosome_count': 10,
-                                                                  'iteration_count': 10,
-                                                                  'mutations': [RandomSampleMutation,
-                                                                                AddPointMutation,
+                                                                  'iteration_count': 30,
+                                                                  'mutations': [AddAndSteerMutation,
                                                                                 RemovePointMutation,
-                                                                                SteerMutation
-                                                                                ],
+                                                                                RandomSampleMutation],
                                                                   'mutation_parameters': [
-                                                                      {'intermediate_point_count': 3},
-                                                                      {'probability': 0.5},
-                                                                      {'probability': 0.5},
-                                                                      {'edge_size': 1.0}]
+                                                                      {'probability': 0.9,
+                                                                       'edge_size': 3.0},
+                                                                      {'probability': 0.9},
+                                                                      {'intermediate_point_count': 2}]
                                                               },
                                                               optimization_objective_parameters={'penalty_weight': 10000000.0}
                                                               )
