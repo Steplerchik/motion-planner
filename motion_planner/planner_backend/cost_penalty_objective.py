@@ -16,9 +16,6 @@ class CostPenaltyObjective(object):
         distance = self.distance(trajectory)
         penalty = self.penalty(trajectory)
         cost = distance + self._penalty_weight * penalty
-        print('Distance:', distance)
-        print('Penalty:', penalty)
-        print('Cost:', cost)
         return cost
 
     def distance(self, trajectory):

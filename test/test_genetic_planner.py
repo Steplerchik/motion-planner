@@ -6,10 +6,11 @@ from motion_planner import *
 class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
         problem_definition_factory = ProblemDefinitionFactory(planner_type=GeneticPlanner,
-                                                              labyrinth=labyrinth.second(),
+                                                              end_position=np.array([6, 6.5, 0]),
+                                                              labyrinth=labyrinth.third(),
                                                               heuristic=NavigationFunctionDoubleNF1,
                                                               planner_parameters={
-                                                                  'intermediate_point_count': 4,
+                                                                  'intermediate_point_count': 3,
                                                                   'chromosome_count': 10,
                                                                   'iteration_count': 10,
                                                                   'mutations': [RandomSampleMutation,
@@ -18,10 +19,10 @@ class TestPlanner(unittest.TestCase):
                                                                                 SteerMutation
                                                                                 ],
                                                                   'mutation_parameters': [
-                                                                      {'intermediate_point_count': 4},
+                                                                      {'intermediate_point_count': 3},
                                                                       {'probability': 0.5},
                                                                       {'probability': 0.5},
-                                                                      {'edge_size': 0.5}]
+                                                                      {'edge_size': 1.0}]
                                                               },
                                                               optimization_objective_parameters={'penalty_weight': 10000000.0}
                                                               )
