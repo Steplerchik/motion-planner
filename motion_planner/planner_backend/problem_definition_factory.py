@@ -26,7 +26,11 @@ class ProblemDefinitionFactory(object):
                                               state_space=state_space,
                                               state_space_parameter=state_space_parameter)
 
-        self.navigation_function = heuristic(end_position, labyrinth, heuristic_resolution)
+        self.navigation_function = heuristic(goal_position=end_position,
+                                             labyrinth=labyrinth,
+                                             resolution=heuristic_resolution,
+                                             second_goal_position=start_position
+                                             )
         self.optimization_objective = optimization_objective(self.planner_factory.space_info, self.navigation_function,
                                                              **optimization_objective_parameters)
         self._start_position = start_position

@@ -70,6 +70,10 @@ def plot_cost_map(navigation_function):
     for point in cost_map.keys():
         cell = Point(point).buffer(resolution / 2).envelope
         grey = 1 - np.exp(-3 * cost_map[point] / max_distance)
+        if grey > 1:
+            grey = 1
+        elif grey < 0:
+            grey = 0
         cell_patch = PolygonPatch(cell, color=(grey, grey, grey))
         ax.add_patch(cell_patch)
     boundaries_polygon = box(boundaries[0], boundaries[2], boundaries[1], boundaries[3])

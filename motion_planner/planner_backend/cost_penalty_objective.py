@@ -16,6 +16,9 @@ class CostPenaltyObjective(object):
         distance = self.distance(trajectory)
         penalty = self.penalty(trajectory)
         cost = distance + self._penalty_weight * penalty
+        print('Distance:', distance)
+        print('Penalty:', penalty)
+        print('Cost:', cost)
         return cost
 
     def distance(self, trajectory):
@@ -42,7 +45,7 @@ class CostPenaltyObjective(object):
                 cost_before_obstacle = previous_point_cost
             elif (previous_point_cost == unfeasible_cost or previous_point_in_collision) and ((point_cost != unfeasible_cost) and (not point_in_collision)):
                 cost_after_obstacle = point_cost
-            elif not self.space_info.check_trajectory(previous_point, point):
+            elif ((previous_point_cost != unfeasible_cost) and (not previous_point_in_collision)) and ((point_cost != unfeasible_cost) and (not point_in_collision)) and (not self.space_info.check_trajectory(previous_point, point)):
                 cost_before_obstacle = previous_point_cost
                 cost_after_obstacle = point_cost
 

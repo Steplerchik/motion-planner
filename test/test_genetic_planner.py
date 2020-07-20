@@ -7,6 +7,7 @@ class TestPlanner(unittest.TestCase):
     def test_planner_1(self):
         problem_definition_factory = ProblemDefinitionFactory(planner_type=GeneticPlanner,
                                                               labyrinth=labyrinth.second(),
+                                                              heuristic=NavigationFunctionDoubleNF1,
                                                               planner_parameters={
                                                                   'intermediate_point_count': 4,
                                                                   'chromosome_count': 10,
